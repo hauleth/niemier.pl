@@ -75,10 +75,14 @@
     // Draw segments
     var
     onOver = function() {
-      this.select('path').animate({strokeWidth: strokeWidth.hover}, 100);
+      this.select('path').animate({
+        strokeWidth: strokeWidth.hover,
+      }, 100);
     },
     onOut = function() {
-      this.select('path').animate({strokeWidth: strokeWidth.normal}, 100);
+      this.select('path').animate({
+        strokeWidth: strokeWidth.normal,
+      }, 100);
     },
     angle = 360 / family.length;
 

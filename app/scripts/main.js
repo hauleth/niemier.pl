@@ -75,31 +75,35 @@
     // Draw segments
     var
     onOver = function() {
-      this.animate({strokeWidth: strokeWidth.hover}, 100);
+      this.select('path').animate({strokeWidth: strokeWidth.hover}, 100);
     },
     onOut = function() {
-      this.animate({strokeWidth: strokeWidth.normal}, 100);
-    };
+      this.select('path').animate({strokeWidth: strokeWidth.normal}, 100);
+    },
+    angle = 360 / family.length;
 
-    for(var i = 0; i < 5; i++) {
+    for(var i = 0; i < family.length; i++) {
       var
-      p = s.path(arc(center, radius, 72 * i - 90, 72 * (i + 1) - 90))
-      .attr({
-        fill: 'transparent',
-        stroke: family[i].color,
-        strokeWidth: strokeWidth.normal,
+      start = angle * i - 90,
+      stop  =  angle * (i + 1) - 90,
+      groupAttrs = {
         id: family[i].id,
         'class': 'link'
-      }),
-      path = s.path(arc(center, radius - strokeWidth.hover * 2, 72 * i - 90, 72 * (i + 1) - 90))
+      },
+      path = s.path(arc(center, radius - strokeWidth.hover * 2, start, stop))
       .attr({fill: 'transparent'});
-      s.text(10, 10, family[i].name).attr({
-        textpath: path,
-        fill: family[i].color,
-      });
-
-      p
-      .hover(onOver, onOut)
+      s.group(
+        s.path(arc(center, radius, start, stop))
+        .attr({
+          fill: 'transparent',
+          stroke: family[i].color,
+          strokeWidth: strokeWidth.normal,
+        }),
+        s.text(10, 10, family[i].name).attr({
+          textpath: path,
+          fill: family[i].color,
+        })
+      ).attr(groupAttrs).hover(onOver, onOut)
       .click(click(['http://', family[i].id, '.niemier.pl'].join('')));
     }
   };

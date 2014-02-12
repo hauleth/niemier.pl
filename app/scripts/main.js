@@ -74,21 +74,11 @@
 
     // Draw segments
     var
-    onOver = function(text) {
-      return function() {
-        this.animate({strokeWidth: strokeWidth.hover}, 100);
-        text.attr({
-          visibility: 'visible'
-        });
-      };
+    onOver = function() {
+      this.animate({strokeWidth: strokeWidth.hover}, 100);
     },
-    onOut = function(text) {
-      return function() {
-        this.animate({strokeWidth: strokeWidth.normal}, 100);
-        text.attr({
-          visibility: 'hidden'
-        });
-      };
+    onOut = function() {
+      this.animate({strokeWidth: strokeWidth.normal}, 100);
     };
 
     for(var i = 0; i < 5; i++) {
@@ -102,15 +92,14 @@
         'class': 'link'
       }),
       path = s.path(arc(center, radius - strokeWidth.hover * 2, 72 * i - 90, 72 * (i + 1) - 90))
-      .attr({fill: 'transparent'}),
-      t = s.text(10, 10, family[i].name).attr({
+      .attr({fill: 'transparent'});
+      s.text(10, 10, family[i].name).attr({
         textpath: path,
         fill: family[i].color,
-        visibility: 'hidden'
       });
 
       p
-      .hover(onOver(t), onOut(t))
+      .hover(onOver, onOut)
       .click(click(['http://', family[i].id, '.niemier.pl'].join('')));
     }
   };

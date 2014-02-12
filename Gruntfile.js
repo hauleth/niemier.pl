@@ -339,6 +339,10 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('cname', function() {
+    grunt.file.write('dist/CNAME', 'niemier.pl');
+  });
+
   grunt.registerTask('build', [
     'clean:dist',
     'useminPrepare',
@@ -350,7 +354,8 @@ module.exports = function (grunt) {
     'copy:dist',
     'rev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'cname'
   ]);
 
   grunt.registerTask('default', [
